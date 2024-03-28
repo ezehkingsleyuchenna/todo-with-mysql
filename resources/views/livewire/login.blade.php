@@ -18,14 +18,11 @@
                     </x-form.text>
                 </x-form.cover>
 
-                <div class="flex w-full">
-                    <x-button type="submit" class="flex items-center justify-center">
-                        <span class="mr-2 uppercase">Login</span>
-                        <span>
-                            <x-icons.arrow-right-circle class="w-6 h-6" />
-                        </span>
-                    </x-button>
-                </div>
+                <x-button-action full label="Login">
+                    <x-slot:icon>
+                        <x-icons.arrow-right-circle class="w-6 h-6" />
+                    </x-slot:icon>
+                </x-button-action>
             </form>
         </div>
         <div class="flex justify-center items-center mt-6">
