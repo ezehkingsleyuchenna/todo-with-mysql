@@ -21,14 +21,11 @@
                     </x-form.text>
                 </x-form.cover>
 
-                <div class="flex w-full">
-                    <x-button type="submit" class="flex items-center justify-center">
-                        <span class="mr-2 uppercase">Register</span>
-                        <span>
-                            <x-icons.user-plus class="w-6 h-6" />
-                        </span>
-                    </x-button>
-                </div>
+                <x-button-action full label="Register" wire:target="register">
+                    <x-slot:icon>
+                        <x-icons.user-plus class="w-6 h-6" />
+                    </x-slot:icon>
+                </x-button-action>
             </form>
         </div>
         <div class="flex justify-center items-center mt-6">
