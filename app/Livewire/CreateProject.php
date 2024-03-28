@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Project;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -10,19 +11,20 @@ class CreateProject extends Component
     #[Validate(['required', 'string', 'min:1', 'max:200'])]
     public string $name;
     #[Validate(['nullable', 'string', 'max:300'])]
-    public string $description;
+    public ?string $description = null;
 
     public function save(): bool
     {
-        $this->validate();
 //        make user
-        $project = \App\Models\Project::make();
+        $project = Project::make();
 //        save to table
+        $project->user_id = auth()->id();
         $project->name = $this->name;
         $project->description = $this->description;
         $project->save();
-//        redirect
-        $this->redirect(route('home'), true);
+
+//        dispatch created project to home
+        $this->dispatch('createdProject', projectId: $project->id)->to(Home::class);
 
         return true;
     }

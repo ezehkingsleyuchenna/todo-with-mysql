@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Home extends Component
@@ -11,6 +12,7 @@ class Home extends Component
         'create-project' => 'Create Project',
     ];
     public ?string $menu = 'tasks';
+    public int $projectId = 0;
     public bool $isCreateProject, $isTasks;
 
     public function mount(): void
@@ -29,6 +31,13 @@ class Home extends Component
     {
         $this->menu = $page;
         $this->setCurrentMenu();
+    }
+
+    #[On('createdProject')]
+    public function createdProject($projectId): void
+    {
+        $this->projectId = $projectId;
+        $this->switchPage('tasks');
     }
 
     public function render()

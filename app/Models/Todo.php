@@ -14,4 +14,11 @@ class Todo extends Model
     protected $casts = [
         'completed_at' => 'datetime',
     ];
+
+//    RELATIONSHIP
+
+    public function project(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Project::class);
+    }
 }

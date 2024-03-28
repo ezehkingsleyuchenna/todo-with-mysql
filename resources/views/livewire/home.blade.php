@@ -29,7 +29,7 @@
 
             <div class="mt-12">
                 @if($isTasks)
-                    <livewire:tasks />
+                    <livewire:tasks :$projectId />
                 @elseif($isCreateProject)
                     <livewire:create-project />
                 @endif
