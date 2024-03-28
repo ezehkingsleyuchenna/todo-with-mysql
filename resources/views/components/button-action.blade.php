@@ -1,6 +1,6 @@
 @props([
     'label' => 'Save',
-    'form' => 'success',
+    'color' => 'success',
     'full' => false,
     'icon' => null,
 ])
@@ -12,7 +12,7 @@
         {{ $attributes->class(['flex w-full' => $full, 'inline-flex' => ! $full, 'justify-center items-center space-x-2'])
                         ->merge(['type' => 'submit']) }}
         wire:loading.attr="disabled"
-        :$form
+        :$color
     >
         <span wire:loading @if($wireTarget) wire:target="{{ $wireTarget }}" @endif>
             <x-icons.spinner sizes="w-3 h-3" />
