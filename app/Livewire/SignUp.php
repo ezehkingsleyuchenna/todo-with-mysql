@@ -28,7 +28,7 @@ class SignUp extends Component
 //        login
         Auth::login($user);
 //        redirect
-        $this->redirect(route('list'), true);
+        $this->redirect(route('index'), true);
 
         return true;
     }
