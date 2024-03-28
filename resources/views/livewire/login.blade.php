@@ -18,7 +18,7 @@
                     </x-form.text>
                 </x-form.cover>
 
-                <x-button-action full label="Login">
+                <x-button-action full label="Login" wire:target="login">
                     <x-slot:icon>
                         <x-icons.arrow-right-circle class="w-6 h-6" />
                     </x-slot:icon>
