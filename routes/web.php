@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(\App\Http\Middleware\Added\Layout::class)->group(function () {
     Route::middleware('auth')->group(function () {
-        Route::get('/', \App\Livewire\Index::class)->name('index');
+        Route::get('/', \App\Livewire\Home::class)->name('home');
         Route::get('/logout', function () {
             auth()->logout();
             return redirect()->route('login');

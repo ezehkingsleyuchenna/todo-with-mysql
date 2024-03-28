@@ -20,7 +20,7 @@ class Login extends Component
             return $this->addError('email', trans('auth.failed'));
         $user = auth()->user();
 //        redirect
-        $this->redirect(route('index'), true);
+        $this->redirect(route('home'), true);
         return true;
     }
 
