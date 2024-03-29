@@ -44,12 +44,38 @@
                         Add task
                     </button>
                     <x-icons.pencil-square class="w-5 h-5 absolute top-[27px] text-gray-600 left-2" />
+                    @if($errors->first('task'))
+                        <p @class(['text-red-500 mt-1 text-xs'])>
+                            {{ $errors->first('task') }}
+                        </p>
+                    @endif
+
+                    <ul class="flex items-center space-x-2 pb-5">
+                        <li>Priority:</li>
+                        <li>
+                            <input type="radio" id="pr1" name="priority" value="1" class="hidden peer" wire:model="priority" />
+                            <label
+                                for="pr1"
+                                class="inline-flex py-1 px-5 text-gray-500 bg-white cursor-pointer rounded
+                                 peer-checked:text-gray-100 peer-checked:bg-green-600
+                                  hover:text-gray-200 hover:bg-green-600"
+                            >
+                                #1
+                            </label>
+                        </li>
+                        <li>
+                            <input type="radio" id="pr2" name="priority" value="2" class="hidden peer" wire:model="priority" />
+                            <label
+                                for="pr2"
+                                class="inline-flex py-1 px-5 text-gray-500 bg-white cursor-pointer rounded
+                                 peer-checked:text-gray-100 peer-checked:bg-red-600
+                                  hover:text-gray-200 hover:bg-red-600"
+                            >
+                                #2
+                            </label>
+                        </li>
+                    </ul>
                 </form>
-                @if($errors->first('task'))
-                    <p @class(['text-red-500 mt-1 text-xs'])>
-                        {{ $errors->first('task') }}
-                    </p>
-                @endif
             </div>
 
             <div class="space-y-6">
@@ -66,16 +92,27 @@
                                 'text-red-600' => ('priorityTasks2' === $item),
                                 'text-xl font-semibold mt-2 text-blue-900 capitalize',
                             ])
-                        >{{ $key }} Task</p>
+                        >
+                            {{ $key }} Task
+                        </p>
                         <ul class="my-4 text-gray-300">
                             @forelse($$item as $task)
                                 <li class=" mt-4" id="1">
                                     <div class="flex gap-2">
-                                        @if($key !== 'completed')
-                                            <div wire:click="markAsCompleted({{ $task->id }})"
-                                                 class="w-9/12 h-12 bg-slate-700 text-slate-400 rounded-[7px] flex justify-start items-center px-3 group cursor-pointer">
+                                        @if($task->is_active)
+                                            <div
+                                                wire:click="completedTask({{ $task->id }})"
+                                                class="w-9/12 bg-slate-700 text-slate-400 rounded-[7px] flex justify-start items-center py-2 px-3 group cursor-pointer"
+                                            >
                                                 <x-icons.check-circle class="w-6 h-6 group-hover:text-green-600 transition-all" />
-                                                <span class="text-sm ml-4 group-hover:line-through font-semibold">{{ $task->task }}</span>
+                                                <div class="ml-4">
+                                                    <span class="text-sm group-hover:line-through font-semibold">
+                                                        {{ $task->task }}
+                                                    </span>
+                                                    <span class="block text-xs lowercase">
+                                                        {{ $task->created_at->format('M.d.Y h:ia') }}
+                                                    </span>
+                                                </div>
                                             </div>
                                         @else
                                             <div wire:click="delete({{ $task->id }})"
@@ -85,16 +122,29 @@
                                                 <span class="text-sm ml-4 group-hover:line-through font-semibold">{{ $task->task }}</span>
                                             </div>
                                         @endif
-                                        <div class="w-1/4 h-12 bg-slate-700 rounded-[7px] flex justify-center text-xs font-semibold text-slate-400 items-center">
-                                            <div class="text-center">
-                                                @if($key == 'open')
-                                                    {{ $task->created_at->format('M.d.Y') }} <br>
-                                                    {{ $task->created_at->format('h:ia') }}
-                                                @else
-                                                    {{ $task->updated_at->format('M.d.Y') }} <br>
-                                                    {{ $task->updated_at->format('h:ia') }}
-                                                @endif
-                                            </div>
+                                        <div class="w-1/4">
+                                            @if($task->is_active)
+                                                <x-button
+                                                    wire:click="completedTask({{ $task->id }})"
+                                                    title="Completed"
+                                                    :full="false"
+                                                    color="success"
+                                                >
+                                                    <x-icons.check-circle class="w-4 h-4 mx-auto" />
+                                                </x-button>
+                                                <x-button wire:click="edit({{ $task->id }})" title="Edit" :full="false">
+                                                    <x-icons.pencil-square class="w-4 h-4 mx-auto" />
+                                                </x-button>
+                                            @endif
+                                            <x-button
+                                                wire:click="delete({{ $task->id }})"
+                                                wire:confirm="Confirm Action"
+                                                title="Delete"
+                                                :full="false"
+                                                color="danger"
+                                            >
+                                                <x-icons.trash class="w-4 h-4 mx-auto" />
+                                            </x-button>
                                         </div>
                                     </div>
                                 </li>

@@ -11,7 +11,7 @@
             </a>
         </div>
     </nav>
-    <div class="bg-slate-700 min-h-screen space-y-10 pt-10">
+    <div class="bg-slate-700 min-h-screen space-y-10 py-10">
         <div class="w-11/12 md:w-1/2 mx-auto">
             <div class="flex items-center space-x-3 py-5">
                 @foreach($menus as $key => $value)
