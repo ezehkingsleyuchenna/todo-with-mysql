@@ -95,6 +95,11 @@ class Tasks extends Component
         $this->dispatch('taskEdit', todo: $todo->id)->to(Home::class);
     }
 
+    public function reorder($priority): void
+    {
+        $this->dispatch('tasksReorder', priority: $priority, project: $this->project)->to(Home::class);
+    }
+
     public function refreshTask(): void
     {
         if ($this->project) {

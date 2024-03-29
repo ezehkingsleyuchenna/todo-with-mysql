@@ -10,11 +10,13 @@
     <meta name="key" content="">
     <meta name="description" content="">
     <meta name="author" content="Ezeh Kingsley: kingsley.uchenna.ezeh@gmail.com">
-    <title>{!! $pageTitle !!}</title>
+    <title>TODO</title>
     <link rel="icon" type="image/x-icon" href="">
+    @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
 {{ $slot }}
+@livewireScriptConfig
 </body>
 </html>

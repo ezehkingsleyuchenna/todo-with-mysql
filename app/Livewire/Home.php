@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Project;
 use App\Models\Todo;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -13,21 +14,23 @@ class Home extends Component
         'create-project' => 'Create Project',
     ];
     public ?string $menu = 'tasks';
+    public ?string $priority;
     public ?int $projectId = null;
-    public bool $isCreateProject, $isTasks, $isEdit;
+    public bool $isCreateProject, $isTasks, $isEdit, $isReorder;
     public Todo $todo;
+    public Project $project;
 
     public function mount(): void
     {
         $this->setCurrentMenu();
     }
 
-
     public function setCurrentMenu(): void
     {
         $this->isTasks = ($this->menu === 'tasks');
         $this->isCreateProject = ($this->menu === 'create-project');
         $this->isEdit = ($this->menu === 'task-edit');
+        $this->isReorder = ($this->menu === 'tasks-reorder');
     }
 
     public function switchPage($page): void
@@ -48,6 +51,14 @@ class Home extends Component
     {
         $this->todo = $todo;
         $this->switchPage('task-edit');
+    }
+
+    #[On('tasksReorder')]
+    public function tasksReorder($priority, Project $project): void
+    {
+        $this->priority = $priority;
+        $this->project = $project;
+        $this->switchPage('tasks-reorder');
     }
 
     public function render()

@@ -31,7 +31,7 @@
 
     <div class="flex justify-between items-center">
         <x-button-action full label="Save" />
-        <x-button color="danger" wire:click="return">Cancel</x-button>
+        <x-button color="danger" wire:click="return">Back</x-button>
     </div>
 </form>
 

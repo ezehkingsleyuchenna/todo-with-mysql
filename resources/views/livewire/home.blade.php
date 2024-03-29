@@ -34,6 +34,8 @@
                     <livewire:create-project />
                 @elseif($isEdit)
                     <livewire:task-edit :todo="$todo" />
+                @elseif($isReorder)
+                    <livewire:tasks-reorder :$priority :$project />
                 @endif
             </div>
         </div>

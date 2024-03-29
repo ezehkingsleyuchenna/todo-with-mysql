@@ -81,6 +81,7 @@
             <div class="space-y-6">
                 @foreach(['#1' => 'priorityTasks1', '#2' => 'priorityTasks2', 'completed' => 'completedTasks'] as $key => $item)
                     <div
+                        wire:key="task{{ $item }}"
                         @class([
                             'border-l-4 border-green-600' => ('priorityTasks1' === $item),
                             'border-l-4 border-red-600' => ('priorityTasks2' === $item),
@@ -98,8 +99,13 @@
                                 {{ $key }} Task
                             </span>
                             <span>
-                                @if(in_array($item, ['priorityTasks1', 'priorityTasks2']))
-                                    <x-button title="Edit" :full="false" class="text-sm">
+                                @if($$item?->isNotEmpty() and in_array($item, ['priorityTasks1', 'priorityTasks2']))
+                                    <x-button
+                                        title="Edit"
+                                        :full="false"
+                                        class="text-sm"
+                                        wire:click="reorder('{{ ['priorityTasks1' => 1, 'priorityTasks2' => 2][$item] }}')"
+                                    >
                                         Reorder
                                     </x-button>
                                 @endif
@@ -107,7 +113,7 @@
                         </div>
                         <ul class="my-4 text-gray-300">
                             @forelse($$item as $task)
-                                <li class=" mt-4" id="1">
+                                <li class=" mt-4" wire:key="task{{ $task->id }}" id="task{{ $task->id }}">
                                     <div class="flex gap-2">
                                         @if($task->is_active)
                                             <div
