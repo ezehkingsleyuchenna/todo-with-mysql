@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Project;
 use App\Models\Todo;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -12,6 +13,7 @@ class Tasks extends Component
     public ?int $projectId = null;
     public $project, $projects;
     public $openTasks, $completedTasks;
+    public $priorityTasks1, $priorityTasks2;
     #[Validate(['required', 'string', 'max:255'])]
     public string $task;
 
@@ -23,6 +25,8 @@ class Tasks extends Component
         if ($this->project) {
             $this->getOpenTasks();
             $this->getCompletedTasks();
+            $this->getPriorityTasks1();
+            $this->getPriorityTasks2();
         }
     }
 
@@ -33,6 +37,8 @@ class Tasks extends Component
 
         $this->getOpenTasks();
         $this->getCompletedTasks();
+        $this->getPriorityTasks1();
+        $this->getPriorityTasks2();
     }
 
     public function getProjects(): void
@@ -47,6 +53,8 @@ class Tasks extends Component
                 ->whereUserId(auth()->id())
                 ->when($this->projectId, fn($query) => $query->whereId($this->projectId))
                 ->first();
+
+        $this->projectId = $this->project?->id;
     }
 
     public function addTask(): bool
@@ -59,7 +67,9 @@ class Tasks extends Component
             'task_order' => ($this->project->tasks->count() + 1)
         ]);
 //        refresh open task
-        $this->getOpenTasks();
+//        $this->getOpenTasks();
+        $this->getPriorityTasks1();
+        $this->getPriorityTasks2();
         $this->reset('task');
 
         return true;
@@ -68,6 +78,16 @@ class Tasks extends Component
     public function getOpenTasks(): void
     {
         $this->openTasks = Todo::query()->whereProjectId($this->project->id)->whereStatus(1)->get();
+    }
+
+    public function getPriorityTasks1(): void
+    {
+        $this->priorityTasks1 = Todo::query()->whereProjectId($this->project->id)->wherePriority(1)->whereStatus(1)->get();
+    }
+
+    public function getPriorityTasks2(): void
+    {
+        $this->priorityTasks2 = Todo::query()->whereProjectId($this->project->id)->wherePriority(2)->whereStatus(1)->get();
     }
 
     public function getCompletedTasks(): void

@@ -53,14 +53,25 @@
             </div>
 
             <div class="space-y-6">
-                @foreach(['open' => 'openTasks', 'completed' => 'completedTasks'] as $key => $item)
-                    <div class="bg-white rounded-lg p-4">
-                        <p class="text-xl font-semibold mt-2 text-blue-900 capitalize">{{ $key }} Task</p>
+                @foreach(['#1' => 'priorityTasks1', '#2' => 'priorityTasks2', 'completed' => 'completedTasks'] as $key => $item)
+                    <div
+                        @class([
+                            'border-l-4 border-green-600' => ('priorityTasks1' === $item),
+                            'border-l-4 border-red-600' => ('priorityTasks2' === $item),
+                            'bg-white rounded-lg p-4',
+                        ])>
+                        <p
+                            @class([
+                                'text-green-600' => ('priorityTasks1' === $item),
+                                'text-red-600' => ('priorityTasks2' === $item),
+                                'text-xl font-semibold mt-2 text-blue-900 capitalize',
+                            ])
+                        >{{ $key }} Task</p>
                         <ul class="my-4 text-gray-300">
                             @forelse($$item as $task)
                                 <li class=" mt-4" id="1">
                                     <div class="flex gap-2">
-                                        @if($key == 'open')
+                                        @if($key !== 'completed')
                                             <div wire:click="markAsCompleted({{ $task->id }})"
                                                  class="w-9/12 h-12 bg-slate-700 text-slate-400 rounded-[7px] flex justify-start items-center px-3 group cursor-pointer">
                                                 <x-icons.check-circle class="w-6 h-6 group-hover:text-green-600 transition-all" />
