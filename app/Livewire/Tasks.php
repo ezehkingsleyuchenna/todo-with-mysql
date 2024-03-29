@@ -90,9 +90,9 @@ class Tasks extends Component
         return true;
     }
 
-    public function edit(Todo $todo)
+    public function edit(Todo $todo): void
     {
-
+        $this->dispatch('taskEdit', todo: $todo->id)->to(Home::class);
     }
 
     public function refreshTask(): void

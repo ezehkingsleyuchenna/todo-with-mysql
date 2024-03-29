@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Todo;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -13,7 +14,8 @@ class Home extends Component
     ];
     public ?string $menu = 'tasks';
     public ?int $projectId = null;
-    public bool $isCreateProject, $isTasks;
+    public bool $isCreateProject, $isTasks, $isEdit;
+    public Todo $todo;
 
     public function mount(): void
     {
@@ -25,6 +27,7 @@ class Home extends Component
     {
         $this->isTasks = ($this->menu === 'tasks');
         $this->isCreateProject = ($this->menu === 'create-project');
+        $this->isEdit = ($this->menu === 'task-edit');
     }
 
     public function switchPage($page): void
@@ -33,11 +36,18 @@ class Home extends Component
         $this->setCurrentMenu();
     }
 
-    #[On('createdProject')]
-    public function createdProject($projectId): void
+    #[On('homeProjectEvent')]
+    public function homeProjectEvent($projectId): void
     {
         $this->projectId = $projectId;
         $this->switchPage('tasks');
+    }
+
+    #[On('taskEdit')]
+    public function taskEdit(Todo $todo): void
+    {
+        $this->todo = $todo;
+        $this->switchPage('task-edit');
     }
 
     public function render()

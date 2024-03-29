@@ -32,6 +32,8 @@
                     <livewire:tasks :$projectId />
                 @elseif($isCreateProject)
                     <livewire:create-project />
+                @elseif($isEdit)
+                    <livewire:task-edit :todo="$todo" />
                 @endif
             </div>
         </div>

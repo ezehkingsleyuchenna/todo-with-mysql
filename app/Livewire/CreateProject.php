@@ -24,7 +24,7 @@ class CreateProject extends Component
         $project->save();
 
 //        dispatch created project to home
-        $this->dispatch('createdProject', projectId: $project->id)->to(Home::class);
+        $this->dispatch('homeProjectEvent', projectId: $project->id)->to(Home::class);
 
         return true;
     }

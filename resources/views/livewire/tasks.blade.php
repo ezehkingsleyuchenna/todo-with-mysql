@@ -86,15 +86,25 @@
                             'border-l-4 border-red-600' => ('priorityTasks2' === $item),
                             'bg-white rounded-lg p-4',
                         ])>
-                        <p
-                            @class([
-                                'text-green-600' => ('priorityTasks1' === $item),
-                                'text-red-600' => ('priorityTasks2' === $item),
-                                'text-xl font-semibold mt-2 text-blue-900 capitalize',
-                            ])
-                        >
-                            {{ $key }} Task
-                        </p>
+                        <div class="my-2 flex items-center justify-between">
+                            <span
+                                @class([
+                                    'text-green-600' => ('priorityTasks1' === $item),
+                                    'text-red-600' => ('priorityTasks2' === $item),
+                                    'text-blue-900',
+                                    'text-xl font-semibold capitalize'
+                                ])
+                            >
+                                {{ $key }} Task
+                            </span>
+                            <span>
+                                @if(in_array($item, ['priorityTasks1', 'priorityTasks2']))
+                                    <x-button title="Edit" :full="false" class="text-sm">
+                                        Reorder
+                                    </x-button>
+                                @endif
+                            </span>
+                        </div>
                         <ul class="my-4 text-gray-300">
                             @forelse($$item as $task)
                                 <li class=" mt-4" id="1">

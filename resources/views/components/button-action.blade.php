@@ -7,7 +7,7 @@
 @php
     $wireTarget = $attributes->get('wire:target') ?: 'save';
 @endphp
-<div>
+<div @class(['w-full' => $full])>
     <x-button
         {{ $attributes->class(['flex w-full' => $full, 'inline-flex' => ! $full, 'justify-center items-center space-x-2'])
                         ->merge(['type' => 'submit']) }}
