@@ -12,7 +12,7 @@ class Home extends Component
         'create-project' => 'Create Project',
     ];
     public ?string $menu = 'tasks';
-    public int $projectId = 0;
+    public ?int $projectId = null;
     public bool $isCreateProject, $isTasks;
 
     public function mount(): void
